@@ -43,19 +43,19 @@ http.route({
           // break;
         case "organizationMembership.created":
           await ctx.runMutation(internal.users.addOrgIdToUser, {
-            tokenIdentifier: `https://top-leopard-81.clerk.accounts.dev|${result.data.public_user_data.user_id}`,
+            tokenIdentifier: `https://${process.env.CLERK_HOSTNAME}|${result.data.public_user_data.user_id}`,
             orgId: result.data.organization.id,
-            // role: result.data.role === "org:admin" ? "admin" : "member",
+            role: result.data.role === "org:admin" ? "admin" : "member",
           });
           break;
-        // case "organizationMembership.updated":
-        //   console.log(result.data.role);
-        //   await ctx.runMutation(internal.users.updateRoleInOrgForUser, {
-        //     tokenIdentifier: `https://${process.env.CLERK_HOSTNAME}|${result.data.public_user_data.user_id}`,
-        //     orgId: result.data.organization.id,
-        //     role: result.data.role === "org:admin" ? "admin" : "member",
-        //   });
-          // break;
+        case "organizationMembership.updated":
+          // console.log(result.data.role);
+          await ctx.runMutation(internal.users.updateRoleInOrgForUser, {
+            tokenIdentifier: `https://${process.env.CLERK_HOSTNAME}|${result.data.public_user_data.user_id}`,
+            orgId: result.data.organization.id,
+            role: result.data.role === "org:admin" ? "admin" : "member",
+          });
+          break;
       }
 
       return new Response(null, {
