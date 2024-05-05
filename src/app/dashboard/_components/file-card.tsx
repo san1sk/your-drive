@@ -47,20 +47,10 @@ import { restoreFile } from "../../../../convex/files";
 import { FileCardActions } from "./file-actions";
 
 
-// function getFileUrl(fileId: Id<"_storage">): string {
-//   return `${process.env.NEXT_PUBLIC_CONVEX_URL}/api/storage/814f06f2-5a37-4e9a-97e6-f5295fa759b0`;
-//   // return `${process.env.NEXT_PUBLIC_CONVEX_URL}/api/storage/${fileId}`;
-//   // console.log("fileId");
-// }
-
-// // function getFileUrl(fileId: Id<"_storage">): string {
-// //   return `${process.env.NEXT_PUBLIC_CONVEX_URL}/api/storage/${fileId}`;
-// // }
-
 export function FileCard({
   file,
 }: {
-  file: Doc<"files"> & { isFavorited: boolean };
+  file: Doc<"files"> & { isFavorited: boolean; url: string | null };
 }) {
   const userProfile = useQuery(api.users.getUserProfile, {
     userId: file.userId,
@@ -83,16 +73,9 @@ export function FileCard({
         </div>
       </CardHeader>
       <CardContent className="h-[200px] flex justify-center items-center">
-        {/* {file.type === "image" && (
-          <Image
-            alt={file.name}
-            width="200"
-            height="100"
-            // src={getFileUrl(file.fileId)}
-            // src={file.url}
-          />
-        )} */}
-        {file.type === "image" && <ImageIcon className="w-20 h-20" />}
+      {file.type === "image" && file.url && (
+          <Image alt={file.name} width="200" height="100" src={file.url} />
+        )}
         {file.type === "csv" && <GanttChartIcon className="w-20 h-20" />}
         {file.type === "pdf" && <FileTextIcon className="w-20 h-20" />}
       </CardContent>

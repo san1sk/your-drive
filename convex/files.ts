@@ -114,7 +114,14 @@ export const getFiles = query({
       files = files.filter((file) => file.type === args.type);
     }
 
-    return files;
+    const filesWithUrl = await Promise.all(
+      files.map(async (file) => ({
+        ...file,
+        url: await ctx.storage.getUrl(file.fileId),
+      }))
+    );
+
+    return filesWithUrl;
   },
 });
 
@@ -141,7 +148,7 @@ function assertCanDeleteFile(user: Doc<"users">, file: Doc<"files">) {
     user.orgIds.find((org) => org.orgId === file.orgId)?.role === "admin";
 
   if (!canDelete) {
-    throw new ConvexError("you have no acces to delete this file");
+    throw new ConvexError("you have no access to delete this file");
   }
 }
 
@@ -170,13 +177,7 @@ export const restoreFile = mutation({
       throw new ConvexError("no access to file");
     }
 
-    const isAdmin =
-      access.user.orgIds.find((org) => org.orgId === access.file.orgId)
-        ?.role === "admin";
-
-    if (!isAdmin) {
-      throw new ConvexError("you have no admin access to delete");
-    }
+    assertCanDeleteFile(access.user, access.file);
 
     await ctx.db.patch(args.fileId, {
       shouldDelete: false,
