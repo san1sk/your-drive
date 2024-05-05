@@ -11,39 +11,15 @@ import { Doc, Id } from "../../../../convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   FileIcon,
   FileTextIcon,
   GanttChartIcon,
   ImageIcon,
-  MoreVertical,
-  StarIcon,
-  TrashIcon,
-  UndoIcon,
 } from "lucide-react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { ReactNode, useState } from "react";
 import Image from "next/image";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
-import { useToast } from "@/components/ui/use-toast";
-import { Protect } from "@clerk/nextjs";
-import { restoreFile } from "../../../../convex/files";
 import { FileCardActions } from "./file-actions";
 
 

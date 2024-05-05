@@ -108,7 +108,6 @@ export function FileCardActions({
               </div>
             )}
           </DropdownMenuItem>
-
           <Protect
             condition={(check) => {
               return (

@@ -14,13 +14,13 @@ import { FileIcon, GridIcon, Loader2, RowsIcon, StarIcon } from "lucide-react";
 import { SearchBar } from "./search-bar";
 import { useState } from "react";
 import { DataTable } from "./file-table";
-import { columns } from "./columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Doc } from "../../../../convex/_generated/dataModel";
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { columns } from "./columns";
 
 function Placeholder() {
   return (
@@ -138,10 +138,9 @@ export function FileBrowser({
           </div>
         </TabsContent>
         <TabsContent value="table">
-          <DataTable columns={columns} data={modifiedFiles} />
+          {/* <DataTable columns={columns} data={modifiedFiles} /> */}
         </TabsContent>
       </Tabs>
-
       {files?.length === 0 && <Placeholder />}
     </div>
   );
